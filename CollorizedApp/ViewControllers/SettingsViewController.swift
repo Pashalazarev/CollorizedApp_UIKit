@@ -7,7 +7,8 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class SettingsViewController: UIViewController {
+    // MARK: = IBOutlets
     
     @IBOutlet var colorView: UIView!
     
@@ -19,21 +20,30 @@ class ViewController: UIViewController {
     @IBOutlet var greenSlider: UISlider!
     @IBOutlet var blueSlider: UISlider!
     
+    //MARK: - Publick Properties
+    
+    var delegate: SettingsViewControllerDelegate!
+    var viewColor: UIColor!
+    
+    // MARK: - View life cicle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemMint
         colorView.layer.cornerRadius = 20
+        colorView.backgroundColor = viewColor
         
         setupSliderValue()
         setupSliderColor()
         
-
-        
-        
     }
     
     // MARK: - IBActions
+    
+    @IBAction func doneButtonPressed() {
+        delegate.setNewColor(colorView.backgroundColor ?? .white)
+        dismiss(animated: true)
+    }
     
     @IBAction func redSliderAction() {
         redColorLabel.text = String(format: "%.2f", redSlider.value)
